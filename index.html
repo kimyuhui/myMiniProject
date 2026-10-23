@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="달콤한 세상으로의 초대, 까까나라">
+  <title>까까나라</title>
+  <link rel="icon" href="./src/main/webapp/snackPage/images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="./src/main/webapp/snackPage/css.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html { margin: 0; scroll-behavior: smooth; scroll-snap-type: y proximity; }
+    body { margin: 0; padding: 0; font-family: 'Suit', sans-serif; color: #5c4033; }
+    a { color: inherit; }
+
+    .site-header {
+      position: fixed; top: 0; left: 0; width: 100%; min-height: 80px;
+      padding: 0 clamp(18px, 5vw, 64px); display: flex; align-items: center;
+      justify-content: center; gap: clamp(20px, 5vw, 70px);
+      background: rgba(255,255,255,.95); backdrop-filter: blur(10px); z-index: 1000;
+      box-shadow: 0 2px 14px rgba(70,45,25,.04);
+    }
+    .site-header .logo-link { position: absolute; left: clamp(18px, 5vw, 64px); display: flex; align-items: center; }
+    .site-header .logo { display: block; width: 68px; height: auto; }
+    .site-header .nav { display: flex; align-items: center; justify-content: center; gap: clamp(20px, 4vw, 56px); }
+    .site-header .nav a { text-decoration: none; font-size: 18px; font-weight: 500; white-space: nowrap; color: #333; }
+    .site-header .nav a:hover { color: #8b6b52; }
+
+    main { padding-top: 80px; }
+    .section {
+      position: relative; width: 100%; min-height: calc(100vh - 80px); padding: 60px 24px;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      scroll-snap-align: start; overflow: hidden;
+    }
+    .section h1 { margin: 0 0 16px; font-size: clamp(36px, 5.8vw, 76px); line-height: 1.2; }
+    .section p { font-size: clamp(16px, 1.6vw, 21px); }
+
+    .section-one {
+      min-height: calc(100vh - 80px); background-image: url('./src/main/webapp/snackPage/images/snackworldimg2.jpg');
+      background-size: cover; background-position: center; background-repeat: no-repeat;
+    }
+    .cloud { position: absolute; width: clamp(100px, 15vw, 190px); height: auto; top: 8%; right: 8%; animation: floatCloud 4s ease-in-out infinite; }
+    @keyframes floatCloud { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-24px); } }
+    .cookie1, .cookie2 { position: absolute; bottom: 0; width: clamp(125px, 20vw, 235px); max-height: 36%; object-fit: contain; z-index: 2; }
+    .cookie1 { left: 30%; }
+    .cookie2 { right: 28%; margin-bottom: 15px; }
+    .welcome-bubble { position: absolute; width: clamp(110px, 15vw, 185px); left: 23%; bottom: 27%; z-index: 3; }
+
+    .section-two { background: #e8d5bd; color: #5c4033; }
+    .brand-intro { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+    .brand-intro h1 { font-family: 'OngleipParkDahyeon', sans-serif; font-size: clamp(42px, 6vw, 78px); }
+    .brand-intro p { font-size: clamp(18px, 2.4vw, 32px); color: #9c8472; margin-bottom: 0; }
+    .snack-list { width: min(1180px, 100%); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 3vw, 30px); margin-top: 38px; }
+    .snack-card { min-width: 0; height: clamp(250px, 34vw, 440px); background-color: #fffaf4; border-radius: 16px; background-size: cover; background-position: center; background-repeat: no-repeat; box-shadow: 0 12px 30px rgba(92,64,51,.08); transition: transform .3s ease, box-shadow .3s ease; }
+    .snack-card:hover { transform: translateY(-6px); box-shadow: 0 18px 36px rgba(92,64,51,.15); }
+    .snack1 { background-image: url('./src/main/webapp/snackPage/images/snack4.jpeg'); }
+    .snack2 { background-image: url('./src/main/webapp/snackPage/images/snack5.jpeg'); }
+    .snack3 { background-image: url('./src/main/webapp/snackPage/images/snack6.jpeg'); }
+    .preview-notice { margin-top: 22px; padding: 10px 15px; border: 1px solid rgba(92,64,51,.18); border-radius: 999px; font-size: 13px !important; color: #765b49; text-align: center; }
+
+    .section-three { background: #fffaf3 url('./src/main/webapp/snackPage/images/peanutpeople.png') center / cover no-repeat; }
+    .health-intro { width: min(1050px, 100%); padding: clamp(20px, 4vw, 44px); transform: translateY(-10px); text-align: center; background: rgba(255,250,243,.78); border-radius: 24px; backdrop-filter: blur(2px); }
+    .fade-text { opacity: 0; transform: translateY(15px); }
+    .fade-text.show { animation: fadeIn 1s ease forwards; }
+    .fade-text.show:nth-child(1) { animation-delay: 0s; }
+    .fade-text.show:nth-child(2) { animation-delay: .7s; }
+    .fade-text.show:nth-child(3) { animation-delay: 1.4s; }
+    .fade-text.show:nth-child(4) { animation-delay: 2.1s; }
+    @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+    .health-intro .text1 { font-family: 'JeonnamEducationTtobaks', sans-serif; font-size: clamp(34px, 5vw, 64px); font-weight: normal; }
+    .health-intro .text2, .health-intro .text3, .health-intro .text4 { font-family: 'JeonnamEducationBarun', sans-serif; font-size: clamp(16px, 2vw, 24px); font-weight: 300; line-height: 1.8; }
+
+    .site-footer { padding: 42px clamp(22px, 8vw, 100px); background: #fffaf2; color: #5c4033; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: clamp(28px, 6vw, 70px); }
+    .footer-logo { flex: 0 0 180px; display: flex; justify-content: center; align-items: center; }
+    .footer-logo img { width: 100%; max-width: 180px; height: auto; display: block; }
+    .footer-info { flex: 1; font-size: 14px; line-height: 1.8; }
+    .footer-info h3 { margin: 0 0 10px; font-size: 20px; color: #5c4033; font-weight: 500; }
+    .footer-info p { margin: 5px 0; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 12px; }
+    .footer-info .copyright { margin-top: 15px; font-size: 12px; color: #9c8472; letter-spacing: .5px; }
+
+    .demo-toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 15px); z-index: 2000; width: max-content; max-width: calc(100% - 32px); padding: 14px 18px; border-radius: 12px; background: #5c4033; color: #fffaf2; box-shadow: 0 10px 30px rgba(40,25,15,.2); opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; font-size: 14px; }
+    .demo-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    @media (max-width: 700px) {
+      .site-header { min-height: 72px; padding: 0 14px; justify-content: flex-end; }
+      .site-header .logo-link { left: 14px; }
+      .site-header .logo { width: 48px; }
+      .site-header .nav { gap: 13px; }
+      .site-header .nav a { font-size: 13px; }
+      main { padding-top: 72px; }
+      .section { min-height: calc(100svh - 72px); padding: 45px 18px; }
+      .cookie1 { left: 12%; }
+      .cookie2 { right: 12%; }
+      .welcome-bubble { left: 10%; bottom: 30%; }
+      .snack-list { grid-template-columns: 1fr; max-width: 340px; }
+      .snack-card { height: 320px; }
+      .section-two { padding-top: 64px; padding-bottom: 64px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 22px; }
+      .footer-logo { flex-basis: auto; justify-content: flex-start; }
+      .footer-logo img { width: 130px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <!-- JSP의 header.jsp 내용을 정적 HTML로 합친 부분 -->
+  <header class="site-header">
+    <a class="logo-link" href="#home" aria-label="까까나라 홈">
+      <img src="./src/main/webapp/snackPage/images/logo2.png" alt="까까나라 로고" class="logo">
+    </a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="#brands">과자목록</a>
+      <a href="#" data-demo-feature="장바구니">장바구니</a>
+      <a href="#" data-demo-feature="판매목록">판매목록</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="section section-one" id="home" aria-label="까까나라 소개">
+      <img src="./src/main/webapp/snackPage/images/bear.png" class="cloud" alt="풍선을 탄 곰 캐릭터">
+      <img src="./src/main/webapp/snackPage/images/cookie1.png" class="cookie1" alt="쿠키 장식">
+      <img src="./src/main/webapp/snackPage/images/cookie2.png" class="cookie2" alt="쿠키 장식">
+      <img src="./src/main/webapp/snackPage/images/welcome2.png" class="welcome-bubble" alt="환영 말풍선">
+    </section>
+
+    <section class="section section-two" id="brands">
+      <div class="brand-intro">
+        <h1>달콤한 세상으로의 초대</h1>
+        <p>까까나라에서만 제공되는 특별한 간식을 만나보세요</p>
+      </div>
+      <div class="snack-list" aria-label="추천 간식">
+        <a class="snack-card snack1" href="#" data-demo-feature="과자 상세보기" aria-label="달달폭신 마시멜로 상품 상세보기"></a>
+        <a class="snack-card snack2" href="#" data-demo-feature="과자 상세보기" aria-label="추천 과자 상세보기"></a>
+        <a class="snack-card snack3" href="#" data-demo-feature="과자 상세보기" aria-label="추천 과자 상세보기"></a>
+      </div>
+      <p class="preview-notice">현재 화면은 GitHub Pages용 미리보기입니다. 장바구니·DB 조회 등 JSP 기능은 실행되지 않습니다.</p>
+    </section>
+
+    <section class="section section-three" id="peanut">
+      <div class="health-intro">
+        <p class="fade-text text1">맛있는 순간에도, 건강한 마음을 담아</p>
+        <p class="fade-text text2">까까나라는 원재료부터 꼼꼼하게 살펴 더 나은 간식 경험을 추구합니다.</p>
+        <p class="fade-text text3">품질과 안전을 중요하게 생각하며, 믿을 수 있는 먹거리를 소개하기 위해 노력합니다.</p>
+        <p class="fade-text text4">소소한 간식 시간까지 기분 좋고 안심할 수 있도록, 까까나라가 함께하겠습니다.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- JSP의 footer.jsp 내용을 정적 HTML로 합친 부분 -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <a href="#home" aria-label="페이지 맨 위로">
+          <img src="./src/main/webapp/snackPage/images/logo2.png" alt="까까나라 로고">
+        </a>
+      </div>
+      <div class="footer-info">
+        <h3>㈜까까나라</h3>
+        <p>까까광역시 까까구 까까로 10-16</p>
+        <p>Tel : 062-266-6617 <span style="margin-left: 20px;">Fax : 062-266-6617</span></p>
+        <p>사업자등록번호 : 409-85-16860</p>
+        <div class="footer-links">
+          <span>개인정보처리방침</span>
+          <span>이메일무단수집거부</span>
+        </div>
+        <p class="copyright">COPYRIGHT © KAKANARA ALL RIGHTS RESERVED</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="demo-toast" id="demoToast" role="status" aria-live="polite"></div>
+  <script>
+    // JSP/DB가 필요한 메뉴는 작동하는 척하지 않고, 정적 미리보기임을 안내합니다.
+    const toast = document.getElementById('demoToast');
+    let toastTimer;
+    document.querySelectorAll('[data-demo-feature]').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        const feature = link.dataset.demoFeature;
+        toast.textContent = `${feature} 기능은 JSP/Tomcat 서버가 필요해요. 현재 페이지는 디자인 미리보기입니다.`;
+        toast.classList.add('show');
+        window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(() => toast.classList.remove('show'), 3200);
+      });
+    });
+
+    const section3 = document.querySelector('#peanut');
+    const texts = section3.querySelectorAll('.fade-text');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            texts.forEach((text) => text.classList.add('show'));
+            observer.unobserve(section3);
+          }
+        });
+      }, { threshold: 0.3 });
+      observer.observe(section3);
+    } else {
+      texts.forEach((text) => text.classList.add('show'));
+    }
+  </script>
+</body>
+</html>
